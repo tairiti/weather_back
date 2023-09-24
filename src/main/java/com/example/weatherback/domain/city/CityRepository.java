@@ -1,4 +1,4 @@
-package com.example.weatherback.domain;
+package com.example.weatherback.domain.city;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

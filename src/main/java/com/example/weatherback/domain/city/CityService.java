@@ -1,4 +1,4 @@
-package com.example.weatherback.domain;
+package com.example.weatherback.domain.city;
 
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -14,5 +14,11 @@ private CityRepository cityRepository;
     public City findCityBy(String cityName) {
         City city = cityRepository.findCityBy(cityName);
         return city;
+    }
+
+    public void deleteCityBy(String cityName) {
+        City city = cityRepository.findCityBy(cityName);
+        Integer cityId = city.getId();
+        cityRepository.deleteById(cityId);
     }
 }

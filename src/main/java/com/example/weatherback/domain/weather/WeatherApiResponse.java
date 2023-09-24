@@ -1,5 +1,6 @@
-package com.example.weatherback.domain;
+package com.example.weatherback.domain.weather;
 
+import com.example.weatherback.domain.weather.Weather;
 import lombok.Data;
 import java.io.Serializable;
 import java.time.Instant;

@@ -1,4 +1,4 @@
-package com.example.weatherback.domain;
+package com.example.weatherback.domain.city;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

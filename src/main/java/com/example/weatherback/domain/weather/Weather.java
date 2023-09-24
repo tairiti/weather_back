@@ -1,5 +1,6 @@
-package com.example.weatherback.domain;
+package com.example.weatherback.domain.weather;
 
+import com.example.weatherback.domain.city.City;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
