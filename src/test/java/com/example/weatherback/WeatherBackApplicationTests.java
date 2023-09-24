@@ -1,4 +1,4 @@
-package com.example.weather_back;
+package com.example.weatherback;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
