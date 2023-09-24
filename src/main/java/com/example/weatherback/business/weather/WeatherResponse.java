@@ -1,4 +1,4 @@
-package com.example.weatherback.business;
+package com.example.weatherback.business.weather;
 
 import com.example.weatherback.domain.weather.Weather;
 import jakarta.validation.constraints.NotNull;
@@ -13,8 +13,8 @@ import java.time.Instant;
  */
 @Value
 public class WeatherResponse implements Serializable {
-    @NotNull
-    Instant time;
+//    @NotNull
+//    Instant time;
     @NotNull
     Integer temperature;
     @NotNull

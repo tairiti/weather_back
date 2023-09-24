@@ -1,4 +1,4 @@
-package com.example.weatherback.business;
+package com.example.weatherback.business.weather;
 
 import com.example.weatherback.domain.city.City;
 import com.example.weatherback.domain.city.CityService;
@@ -50,7 +50,8 @@ public class WeatherInfoService {
         cityService.saveCity(city);
     }
 
-    @Scheduled(cron = "* 15 * * * *")
+//    @Scheduled(cron = "* 15 * * * *")
+    @Scheduled(cron = "1 * * * * *")
     public void scheduledFetchWeatherData() {
         fetchWeatherData();
     }

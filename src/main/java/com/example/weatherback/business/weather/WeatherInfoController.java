@@ -1,4 +1,4 @@
-package com.example.weatherback.business;
+package com.example.weatherback.business.weather;
 
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.DeleteMapping;
