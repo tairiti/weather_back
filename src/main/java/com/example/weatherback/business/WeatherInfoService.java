@@ -51,7 +51,9 @@ public class WeatherInfoService {
 //    @Scheduled(cron = "* 15 * * * *")
     @Scheduled(cron = "* * * * * *")
     public void scheduledFetchWeatherData() {
+        if(cityName != null){
         fetchWeatherData();
+        }
     }
     public void fetchWeatherData() {
         String apiUrl = weatherApiUrl + cityName + "&appid=" + apiKey + "&units=metric";
