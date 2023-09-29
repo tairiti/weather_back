@@ -6,12 +6,16 @@ import com.example.weatherback.domain.weather.Weather;
 import com.example.weatherback.domain.weather.WeatherApiResponse;
 import com.example.weatherback.domain.weather.WeatherMapper;
 import com.example.weatherback.domain.weather.WeatherService;
+import com.example.weatherback.infrastructure.exception.DataNotFoundException;
 import jakarta.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 
@@ -37,29 +41,34 @@ public class WeatherInfoService {
 
     public WeatherResponse getWeatherInfo(String cityName) {
         this.cityName = cityName;
-        City existingCity = cityService.findCityBy(cityName);
-        if (existingCity == null) {
-            saveCity(cityName);
+        try {
+            scheduledFetchWeatherData();
+        } catch (HttpClientErrorException.NotFound ex) {
+            throw new DataNotFoundException("Sellise nimega linna ei ole andmebaasis", 111);
         }
-        scheduledFetchWeatherData();
         return weatherService.getWeatherInfoBy(cityName);
     }
-    private void saveCity(String cityName) {
-        City city = new City();
-        city.setName(cityName);
-        cityService.saveCity(city);
-    }
-
-    @Scheduled(cron = "* 15 * * * *")
+//    @Scheduled(cron = "* 15 * * * *")
+    @Scheduled(cron = "* * * * * *")
     public void scheduledFetchWeatherData() {
         fetchWeatherData();
     }
     public void fetchWeatherData() {
         String apiUrl = weatherApiUrl + cityName + "&appid=" + apiKey + "&units=metric";
         WeatherApiResponse weatherApiResponse = restTemplate.getForObject(apiUrl, WeatherApiResponse.class);
+
+        City existingCity = cityService.findCityBy(cityName);
+        if (existingCity == null) {
+            saveCity(cityName);
+        }
         weatherApiResponse.setTimestamp(Instant.now());
         City city = cityService.findCityBy(cityName);
         saveWeatherApiInfo(weatherApiResponse, city);
+    }
+    private void saveCity(String cityName) {
+        City city = new City();
+        city.setName(cityName);
+        cityService.saveCity(city);
     }
 
     private void saveWeatherApiInfo(WeatherApiResponse weatherApiResponse, City city) {
